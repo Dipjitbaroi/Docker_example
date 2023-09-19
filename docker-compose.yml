@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  mongo_db:
+    image: mongo:latest
+    container_name: db_container
+    volumes:
+      - mongo_db:/data/db
+    restart: always
+
+    #node api container
+
+  api:
+    container_name: kryptup_backend
+    image: krypt_image
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+
+    ports:
+      - "5001:5001"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      
+    environment:
+      TWILIO_AUTH_TOKEN: 9c6fb72cf21ed5d0838add0bb10b93b6
+      TWILIO_ACCOUNT_SID: ACf2deb7fa27d311f6a75f806def426c8e
+      CORE_API_KEY: cenmNmJoNdeQcyhtSYcKuFZj8tVAG7bH
+      JWT_SECRET: opijib78guyvi76f8fyt68f57f6ftuybhjbg876f67ede5dytrf6543e4dtfv76tf876dvi
+      VAPID_PUBLIC_KEY: BNhzmuU5g2DQvFgU5axOJL1Vt6zeypasEhqpz43sjNwVIKBqvaOmleSh7Q5s5z_wWv2t9Zb5foSuAl9tJWQpLf0
+      VAPID_PRIVATE_KEY: scFOBUbEGRSmMvD_68CHjvmC5Rl8luhCd312JPvH3T8
+      SENDGRID_API_KEY: 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
+      EMAIL_FROM: tripathihk2014@gmail.com
+      CLIENT_URL: http://localhost:3000
+      JWT_ACCOUNT_ACTIVATION: LKFDKLSMSFDVNVLD9E9EUFJFMKFJ73937FKCFLE9EF94384JFJDDDAKJNDKD
+      CLIENT_ID: 093549506b8f5a8911405b0c4527c7fd
+      CLIENT_SECRET: af7e4cdaa67d3292348fa2d66f90e2fb1045272f
+      CHATBOT_ACCESS_TOKEN: 6HS2XN960wzMoXN5IQRbxrklAuUX8pcu
+      # DB_URL: mongodb+srv://nodeUser:nodeUser@nodecluster.ec2e8.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+      DB_URL: mongodb://mongo_db:27017/myFirstDatabase
+      DB_DROPLET_URL: mongodb+srv://doadmin:264eQ9x8ER71vD0L@db-mongodb-nyc3-45583-9f861e8a.mongo.ondigitalocean.com/admin?authSource=admin&replicaSet=db-mongodb-nyc3-45583&tls=true
+      ENV_TYPE: DEVELOPMENT
+      SALT: 10
+      REDIS_PORT: 6379
+      CMC_PRO_API_KEY: ea6c806b-6b00-480f-834f-54909e38502d
+      GOOGLE_CLIENT_ID: 225888385191-fl38sq1v28osdmvtvndgn6a8igo0t0rf.apps.googleusercontent.com
+      DEFAULT_PASSWORD: SSJNBWUY23281NCFUFH
+
+    depends_on:
+      - mongo_db
+
+volumes:
+  mongo_db: {}
