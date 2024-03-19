@@ -1,0 +1,6 @@
+docker-compose up
+docker network create nodeNETWORK
+docker-compose down
+docker-compose build --no-cache
+docker system prune
+docker-compose down --remove-orphans
